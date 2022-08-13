@@ -1,13 +1,16 @@
 pipeline {
     agent any
     stages {
-      stage('Docker Image build') {
-        steps {
-          script {
-            sh 'docker image build -t gameoflife:1.1 .'
-          }
+        stage('Source Code') {
+            git url: "https://github.com/Sivarani15/game-of-life.git", branch: "docker"
         }
-      }
+        stage('Docker Image build') {
+            steps {
+            script {
+                sh 'docker image build -t gameoflife:1.1 .'
+            }
+            }
+        }
       stage('Push Image to Jfrog'){
         steps {
           script {
