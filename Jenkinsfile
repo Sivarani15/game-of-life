@@ -21,10 +21,27 @@ pipeline {
                 archiveArtifacts artifacts: '**/*.war', followSymlinks: false
             }
         }
-        // stage('Configuring Artifactory') {
-        //     steps {
-
-        //     }
-        // }
+        stage('Configuring Artifactory') {
+            steps {
+                rtMavenDeployer (
+                    id: 'game-of-life',
+                    serverId: 'JFROG_INSTANCE',
+                    releaseRepo: 'gameoflife-release-local',
+                    snapshotRepo: 'gameoflife-snapshot-local'
+                )
+            }
+        }
+        stage('Atrifact deployment') {
+            steps {
+                rtMavenRun (
+                    // Tool name from Jenkins configuration.
+                    tool: MAVEN_DEFAULT,
+                    // Set to true if you'd like the build to use the Maven Wrapper.
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: 'game-of-life'
+                )
+            }
+        }
     }
 }
