@@ -9,12 +9,17 @@ pipeline {
                 git url: "https://github.com/Sivarani15/game-of-life.git",  branch: "jenkins"
             }
         }
-        stage('Build and SonarQubeAnalysis') {
+        stage('Build') {
             steps {
-                withSonarQubeEnv('SONAR_LATEST')
-                    sh script: "mvn ${params.GOAL} sonar:sonar"
+                sh 'mvn clean package'
             }
         }
+//         stage('Build and SonarQubeAnalysis') {
+//             steps {
+//                 withSonarQubeEnv('SONAR_LATEST')
+//                     sh script: "mvn ${params.GOAL} sonar:sonar"
+//             }
+//         }
         stage('Archiving test results') {
             steps {
                 junit testResults: 'target/surefire-reports/*.xml'
