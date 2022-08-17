@@ -18,7 +18,7 @@ pipeline {
         stage('Docker Image build') {
             steps {
                 script {
-                    sh 'docker image build -t gameoflife:1.1 .'
+                    sh 'docker image build -t gameoflife:1.2 .'
                 }
             }
         }
@@ -26,7 +26,7 @@ pipeline {
             steps {
               rtServer (
                   id: 'JFROG_INSTANCE',
-                  url: 'https://sivarani42.jfrog.io',
+                  url: 'https://sivarani42.jfrog.io/gameoflife',
                   credentialsId: 'jfrog-id'
               )
             }
@@ -35,8 +35,8 @@ pipeline {
           steps {
               rtDockerPush(
                   serverId: 'JFROG_INSTANCE',
-                  image: 'gameoflife:1.1',
-                  targetRepo: 'sivarani42.jfrog.io/gameoflife/'
+                  image: 'gameoflife:1.2',
+                  targetRepo: 'sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
               )
           }
         }
