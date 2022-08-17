@@ -29,6 +29,7 @@ pipeline {
               rtDockerPush(
                   serverId: 'JFROG_INSTANCE',
                   image: 'sivarani42.jfrog.io/gameoflife/gameoflife.war',
+                  host: 'https://sivarani42.jfrog.io'
               )
           }
         }
