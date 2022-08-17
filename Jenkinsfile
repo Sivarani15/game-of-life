@@ -2,6 +2,11 @@ pipeline {
     agent {
         label 'docker'
     }
+    environment {
+      imagename = "gameoflife:1.2"
+      registryCredential = "jfrog-id"
+      dockerImage = ''
+    }
     stages {
         stage('Source Code') {
             steps {
@@ -27,28 +32,27 @@ pipeline {
               rtServer (
                   id: 'JFROG_INSTANCE',
                   url: 'https://sivarani42.jfrog.io/gameoflife',
-                  credentialsId: 'jfrog-id'
               )
             }
         }
-        stage('Push image to Jfrog') {
-          steps {
-              rtDockerPush(
-                  serverId: 'JFROG_INSTANCE',
-                  image: 'gameoflife:1.2',
-                  targetRepo: 'sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
-              )
-          }
-        }
-        // stage('Push Image to Jfrog'){
+        // stage('Push image to Jfrog') {
         //   steps {
-        //     script {
-        //       withCredentials([string(credentialsId: 'jfrog-id', variable: 'jfrogpwd')]) {
-        //         sh 'docker login -u sivarani42@gmail.com -p ${jfrogpwd}'
-        //       }
-        //       sh 'docker push sivarani42.jfrog.io/gameoflife/'
-        //     }
+        //       rtDockerPush(
+        //           serverId: 'JFROG_INSTANCE',
+        //           image: 'gameoflife:1.2',
+        //           targetRepo: 'sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
+        //       )
         //   }
         // }
+        stage('Push Image to Jfrog'){
+          steps {
+            script {
+              withCredentials([usernamePassword(credentialsId: 'jfrog-id', passwordVariable: 'jfrogpasswd', usernameVariable: 'jfrog-user')]) {
+                  sh "docker login -u ${env.jfrog-user} -p ${env.jfrogpasswd}"
+                  sh 'docker push sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
+              }
+            }
+          }
+        }
     }
 }
