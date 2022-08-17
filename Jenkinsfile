@@ -15,15 +15,32 @@ pipeline {
             }
             }
         }
-      stage('Push Image to Jfrog'){
-        steps {
-          script {
-            withCredentials([string(credentialsId: 'jfrog-id', variable: 'jfrogpwd')]) {
-              sh 'docker login -u sivarani42.jfrog.io -p ${jfrogpwd}'
+        stage('Arti-Configuration') {
+            steps {
+              rtServer (
+                  id: 'JFROG_INSTANCE',
+                  url: 'https://sivarani42.jfrog.io',
+                  credentialsId: 'jfrog-id'
+              )
             }
-             sh 'docker push sivarani42.jfrog.io/gameoflife/'
+        }
+        stage('Push image to Jfrog') {
+          steps {
+              rtDockerPush(
+                  serverId: 'JFROG_INSTANCE',
+                  image: 'sivarani42.jfrog.io/gameoflife/gameoflife.war',
+              )
           }
         }
-      }
+        // stage('Push Image to Jfrog'){
+        //   steps {
+        //     script {
+        //       withCredentials([string(credentialsId: 'jfrog-id', variable: 'jfrogpwd')]) {
+        //         sh 'docker login -u sivarani42@gmail.com -p ${jfrogpwd}'
+        //       }
+        //       sh 'docker push sivarani42.jfrog.io/gameoflife/'
+        //     }
+        //   }
+        // }
     }
 }
