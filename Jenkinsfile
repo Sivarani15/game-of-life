@@ -47,8 +47,8 @@ pipeline {
         stage('Push Image to Jfrog'){
           steps {
             script {
-              withCredentials([usernamePassword(credentialsId: 'jfrog-id', passwordVariable: 'jfrogpasswd', usernameVariable: 'jfrog-user')]) {
-                  sh "docker login -u ${env.jfrog-user} sivarani42.jfrog.io -p ${env.jfrogpasswd}"
+              withCredentials([usernamePassword(credentialsId: 'jfrog-id', passwordVariable: 'jfrogpasswd', usernameVariable: 'jfroguser')]) {
+                  sh "docker login -u ${env.jfroguser} sivarani42.jfrog.io -p ${env.jfrogpasswd}"
                   sh 'docker push sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
               }
             }
