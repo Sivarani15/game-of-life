@@ -27,14 +27,14 @@ pipeline {
                 }
             }
         }
-        stage('Arti-Configuration') {
-            steps {
-              rtServer (
-                  id: 'JFROG_INSTANCE',
-                  url: 'https://sivarani42.jfrog.io/gameoflife',
-              )
-            }
-        }
+        // stage('Arti-Configuration') {
+        //     steps {
+        //       rtServer (
+        //           id: 'JFROG_INSTANCE',
+        //           url: 'https://sivarani42.jfrog.io/gameoflife',
+        //       )
+        //     }
+        // }
         // stage('Push image to Jfrog') {
         //   steps {
         //       rtDockerPush(
