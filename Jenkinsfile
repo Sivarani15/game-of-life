@@ -18,7 +18,7 @@ pipeline {
         stage('Docker Image build') {
             steps {
                 script {
-                    sh 'docker image build -t gameoflife:1.1 .'
+                    sh 'docker image build -t gameoflife:1.2 .'
                 }
             }
         }
