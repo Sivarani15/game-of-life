@@ -8,7 +8,7 @@ pipeline {
                 git url: "https://github.com/Sivarani15/game-of-life.git", branch: "docker"
             }    
         }
-        Stage('Build') {
+        stage('Build') {
             steps {
                 script {
                   sh 'mvn clean install'
