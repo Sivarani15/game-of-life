@@ -2,11 +2,11 @@ pipeline {
     agent {
         label 'docker'
     }
-    environment {
-      imagename = "gameoflife:1.2"
-      registryCredential = "jfrog-id"
-      dockerImage = ''
-    }
+    // environment {
+    //   imagename = "gameoflife:1.2"
+    //   registryCredential = "jfrog-id"
+    //   dockerImage = ''
+    // }
     stages {
         stage('Source Code') {
             steps {
@@ -49,6 +49,7 @@ pipeline {
             script {
               withCredentials([usernamePassword(credentialsId: 'jfrog-id', passwordVariable: 'jfrogpasswd', usernameVariable: 'jfroguser')]) {
                   sh "docker login -u ${env.jfroguser} sivarani42.jfrog.io -p ${env.jfrogpasswd}"
+                  sh 'docker tag gameoflife:1.2 sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
                   sh 'docker push sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
               }
             }
