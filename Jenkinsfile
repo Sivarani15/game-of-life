@@ -26,7 +26,7 @@ pipeline {
             steps {
               rtServer (
                   id: 'JFROG_INSTANCE',
-                  url: 'https://sivarani42.jfrog.io',
+                  url: 'https://sivarani42.jfrog.io/gameoflife',
                   credentialsId: 'jfrog-id'
               )
             }
@@ -35,8 +35,8 @@ pipeline {
           steps {
               rtDockerPush(
                   serverId: 'JFROG_INSTANCE',
-                  image: 'gameoflife:1.1',
-                  targetRepo: 'sivarani42.jfrog.io/gameoflife/'
+                  image: 'gameoflife:1.2',
+                  targetRepo: 'sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
               )
           }
         }
