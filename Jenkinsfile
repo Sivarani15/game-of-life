@@ -8,11 +8,18 @@ pipeline {
                 git url: "https://github.com/Sivarani15/game-of-life.git", branch: "docker"
             }    
         }
+        Stage('Build') {
+            steps {
+                script {
+                  sh 'mvn clean install'
+                }
+            }
+        }
         stage('Docker Image build') {
             steps {
-            script {
-                sh 'docker image build -t gameoflife:1.1 .'
-            }
+                script {
+                    sh 'docker image build -t gameoflife:1.1 .'
+                }
             }
         }
         stage('Arti-Configuration') {
@@ -28,8 +35,8 @@ pipeline {
           steps {
               rtDockerPush(
                   serverId: 'JFROG_INSTANCE',
-                  image: 'sivarani42.jfrog.io/gameoflife/gameoflife.war',
-                  host: 'https://sivarani42.jfrog.io'
+                  image: '/target/gameoflife//gameoflife.war',
+                  targetRepo: 'sivarani42.jfrog.io/gameoflife/'
               )
           }
         }
