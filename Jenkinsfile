@@ -35,7 +35,7 @@ pipeline {
           steps {
               rtDockerPush(
                   serverId: 'JFROG_INSTANCE',
-                  image: '/target/gameoflife//gameoflife.war',
+                  image: 'gameoflife:1.1',
                   targetRepo: 'sivarani42.jfrog.io/gameoflife/'
               )
           }
