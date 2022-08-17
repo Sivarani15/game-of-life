@@ -48,7 +48,7 @@ pipeline {
           steps {
             script {
               withCredentials([usernamePassword(credentialsId: 'jfrog-id', passwordVariable: 'jfrogpasswd', usernameVariable: 'jfrog-user')]) {
-                  sh "docker login -u ${env.jfrog-user} -p ${env.jfrogpasswd}"
+                  sh "docker login -u ${env.jfrog-user} sivarani42.jfrog.io -p ${env.jfrogpasswd}"
                   sh 'docker push sivarani42.jfrog.io/gameoflife/gameoflife:1.2'
               }
             }
